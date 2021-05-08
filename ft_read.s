@@ -1,22 +1,18 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    ft_read.s                                          :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: mbifenzi <mbifenzi@student.42.fr>          +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2021/05/07 14:26:38 by mbifenzi          #+#    #+#              #
-#    Updated: 2021/05/07 14:27:50 by mbifenzi         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
 
+section .text
 global _ft_read
+
+extern ___error
 
 _ft_read:
 	mov rax, 0x2000003
- syscall
+	syscall
 	jc	error_exit
 	ret					
 error_exit:
+	push rax
+	call ___error
+	pop r8
+	mov [rax], r8
 	mov rax, -1
 	ret
